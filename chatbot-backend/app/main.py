@@ -5,7 +5,7 @@ from typing import List
 from dotenv import load_dotenv
 import os
 from openai import OpenAI
-from utils.inventory import load_inventory, find_item_by_name
+from utils.inventory import load_inventory, filter_by_category, find_item_by_name
 
 
 # Load environment variables
@@ -50,44 +50,59 @@ def read_root():
 # Include API routes
 app.include_router(inventory.router, prefix="/api/inventory", tags=["Inventory"])
 
+from utils.inventory import load_inventory, filter_by_category, find_item_by_name
+
 @app.websocket("/ws/chat")
 async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
+        context = [{"role": "system", "content": "You are a helpful assistant who manages an inventory system."}]
+        inventory = load_inventory()
+
         while True:
-            data = await websocket.receive_text()
-            print(f"User: {data}")
+            user_message = await websocket.receive_text()
+            print(f"User: {user_message}")
 
-            # Check if query relates to inventory
-            inventory = load_inventory()
-            item = find_item_by_name(data, inventory)
+            # Add the user message to the context
+            context.append({"role": "user", "content": user_message})
 
-            if item:
-                # Respond with inventory details
-                if item["quantity"] > 0:
-                    ai_message = f"We have {item['quantity']} units of {item['name']} in stock."
+            # Check for inventory-related queries
+            if "laptops" in user_message.lower():
+                laptops = filter_by_category("laptop", inventory)
+                if laptops:
+                    laptop_names = ", ".join([laptop["name"] for laptop in laptops])
+                    ai_message = f"We currently have the following laptops in stock: {laptop_names}."
                 else:
-                    ai_message = f"Sorry, {item['name']} is currently out of stock."
+                    ai_message = "Sorry, we currently have no laptops in stock."
+                context.append({"role": "assistant", "content": ai_message})
+                await manager.broadcast(f"AI: {ai_message}")
+            elif "HP" in user_message or "Dell" in user_message:  # Specific brand query
+                item = find_item_by_name(user_message, inventory)
+                if item:
+                    if item["quantity"] > 0:
+                        ai_message = f"We have {item['quantity']} units of {item['name']} in stock."
+                    else:
+                        ai_message = f"Sorry, {item['name']} is currently out of stock."
+                else:
+                    ai_message = "I couldn't find that item in our inventory."
+                context.append({"role": "assistant", "content": ai_message})
+                await manager.broadcast(f"AI: {ai_message}")
             else:
-                # Default AI response using OpenAI API
+                # Let OpenAI handle reasoning for complex queries
                 try:
                     response = client.chat.completions.create(
-                        model="gpt-3.5-turbo",  # Use "gpt-4o" or "gpt-4" if available
-                        messages=[
-                            {"role": "system", "content": "You are a helpful assistant."},
-                            {"role": "user", "content": data}
-                        ],
+                        model="gpt-3.5-turbo",
+                        messages=context,
                         temperature=0.7,
                         max_tokens=150
                     )
                     ai_message = response.choices[0].message.content
+                    context.append({"role": "assistant", "content": ai_message})
+                    await manager.broadcast(f"AI: {ai_message}")
                 except Exception as e:
                     error_message = f"Error generating response: {str(e)}"
                     print(error_message)
-                    ai_message = "AI: Sorry, there was an error generating a response."
-
-            # Broadcast AI response or inventory data back to the client
-            await manager.broadcast(f"AI: {ai_message}")
+                    await websocket.send_text("AI: Sorry, there was an error generating a response.")
     except WebSocketDisconnect:
         manager.disconnect(websocket)
         print("Client disconnected")
