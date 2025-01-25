@@ -1,0 +1,7 @@
+{
+  "computers": [
+    { "id": 1, "brand": "HP", "quantity": 2 },
+    { "id": 2, "brand": "Dell", "quantity": 1 },
+    { "id": 3, "brand": "Apple", "quantity": 1 }
+  ]
+}
