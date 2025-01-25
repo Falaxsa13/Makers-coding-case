@@ -2,12 +2,22 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import inventory
 from typing import List
+from dotenv import load_dotenv
+import os
+from openai import OpenAI
 
+
+# Load environment variables
+load_dotenv()
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# FastAPI app initialization
 app = FastAPI()
 
+# CORS Middleware configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000"],  # Update with specific origin in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -39,16 +49,31 @@ def read_root():
 # Include API routes
 app.include_router(inventory.router, prefix="/api/inventory", tags=["Inventory"])
 
-# WebSocket route
 @app.websocket("/ws/chat")
 async def websocket_endpoint(websocket: WebSocket):
-    print("New WebSocket connection...")
     await manager.connect(websocket)
     try:
         while True:
             data = await websocket.receive_text()
-            print(f"Received: {data}")
-            await manager.broadcast(f"Server: {data}")
+            print(f"User: {data}")
+
+            try:
+                response = client.chat.completions.create(
+                    model="gpt-3.5-turbo",
+                    messages=[
+                        {"role": "system", "content": "You are a helpful assistant."},
+                        {"role": "user", "content": data}
+                    ],
+                    temperature=0.7,
+                    max_tokens=150
+                )
+                ai_message = response.choices[0].message.content
+
+                await manager.broadcast(f"AI: {ai_message}")
+            except Exception as e:
+                error_message = f"Error generating response: {str(e)}"
+                print(error_message)
+                await websocket.send_text("AI: Sorry, there was an error generating a response.")
     except WebSocketDisconnect:
-        print("WebSocket disconnected")
         manager.disconnect(websocket)
+        print("Client disconnected")
