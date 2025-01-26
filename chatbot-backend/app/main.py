@@ -141,10 +141,10 @@ async def websocket_endpoint(websocket: WebSocket):
 
             # Call OpenAI with function definitions
             response = client.chat.completions.create(
-                model="gpt-3.5-turbo",  # or gpt-3.5-turbo-16k-0613, etc.
+                model="gpt-3.5-turbo",
                 messages=messages,
                 functions=openai_functions,
-                function_call="auto"  # Let the AI choose to call a function
+                function_call="auto"
             )
 
             

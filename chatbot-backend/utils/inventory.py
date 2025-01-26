@@ -15,7 +15,6 @@ def getProducts(query: str) -> str:
     results = [item for item in inventory 
                if query_lower in item["name"].lower() or query_lower in item["description"].lower()]
 
-    # Convert results to JSON string for the LLM
     return json.dumps(results, ensure_ascii=False)
 
 def reply(message: str) -> str:
