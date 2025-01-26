@@ -8,9 +8,9 @@ const Navbar = () => {
     // const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <>
-        <div className="bg-foreground/70 sticky  top-0 text-background w-full h-16 flex justify-between items-center p-4">
+        <div className="bg-foreground sticky  top-0 text-background w-full h-16 flex justify-between items-center p-4">
 
-          <p>Logo</p>
+            <p className='italic'>Makers tech</p>
         
         <ul className='flex gap-4  justify-betweem'>
           <li>
