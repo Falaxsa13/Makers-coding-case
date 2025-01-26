@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
+import { WebSocketProvider } from "@/provider/WebSockerProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,20 +28,27 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}
       >
+        <WebSocketProvider>
+        <Navbar />
          <div className="flex h-screen ">
+         
+          
       {/* Sidebar for large screens */}
-      <div className="hidden md:flex md:w-64 shadow-md">
+      {/* <div className="hidden md:flex md:w-72 shadow-md">
         <Sidebar />
-      </div>
+      </div> */}
       
-      <Navbar />
+      
       
       {/* Main content */}
-      <div className="flex-1 p-4">{children}</div>
+      <div className="flex-1 p-4">
+      
+        {children}
+      </div>
     </div>
-
+    </WebSocketProvider>
 
       </body>
     </html>

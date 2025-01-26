@@ -3,20 +3,20 @@ import React from 'react'
 
 const Sidebar = () => {
   return (
-    <nav>
-    <ul>
+    
+    <ul className='flex gap-4  justify-betweem'>
       <li>
-       <Link href="/" className="block p-4 hover:bg-gray-200">
+       <Link href="/" className="block p-4 hover:bg-secondary-200">
           Chatbot
         </Link>
       </li>
       <li>
-       <Link href="/dashboard" className="block p-4 hover:bg-gray-200">
+       <Link href="/dashboard" className="block p-4 hover:bg-secondary-200">
           Dashboard
         </Link>
       </li>
     </ul>
-  </nav>
+  
 
   )
 }

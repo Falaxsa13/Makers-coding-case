@@ -1,34 +1,30 @@
-'use client'
+// 'use client'
 import React, { useState } from 'react'
 import Sidebar from './Sidebar'
-import { Menu, X } from 'lucide-react'
+import Link from 'next/link'
+// import { Menu, X } from 'lucide-react'
 
 const Navbar = () => {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+    // const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <>
-        <div className="flex md:hidden">
-        <button
-         onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 m-2 focus:outline-none focus:ring"
-        >
-          {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-      <div
-        className={`fixed inset-0 z-40 md:hidden bg-black bg-opacity-50 transition-opacity ${
-          sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={() => setSidebarOpen(false)}
-      >
-        <div
-          className={`absolute top-0 left-0 w-64  shadow-md transition-transform transform ${
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <Sidebar />
-        </div> 
+        <div className="bg-foreground/70 sticky  top-0 text-background w-full h-16 flex justify-between items-center p-4">
+
+          <p>Logo</p>
+        
+        <ul className='flex gap-4  justify-betweem'>
+          <li>
+          <Link href="/" className="block p-4 hover:bg-secondary-200">
+              Chatbot
+            </Link>
+          </li>
+          <li>
+          <Link href="/dashboard" className="block p-4 hover:bg-secondary-200">
+              Dashboard
+            </Link>
+          </li>
+        </ul>
+            
        </div> 
 
     </>
