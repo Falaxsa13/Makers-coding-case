@@ -1,7 +1,14 @@
-"use client"
+"use client";
 
-import { TrendingUp } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts"
+import { TrendingUp } from "lucide-react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 import {
   Card,
@@ -10,65 +17,67 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
-import { useEffect, useState } from "react"
-import { countProductsByBrand, countProductsByCategory, sortByPrice, sortByQuantity } from "@/services/backend/data"
-import { BrandResponse, CategoriesResponse } from "@/index"
-
-
+} from "@/components/ui/chart";
+import { useEffect, useState } from "react";
+import {
+  countProductsByBrand,
+  countProductsByCategory,
+  sortByPrice,
+  sortByQuantity,
+} from "@/services/backend/data";
+import { BrandResponse, CategoriesResponse } from "@/index";
 
 type BarComponentProps = {
-  type: 'price' | 'quantity';
-}
+  type: "price" | "quantity";
+};
 
-export function BarComponent({type}: BarComponentProps) {
-  const [data, setData] = useState<BrandResponse[] | CategoriesResponse[]>([])
+export function BarComponent({ type }: BarComponentProps) {
+  const [data, setData] = useState<BrandResponse[] | CategoriesResponse[]>([]);
 
   useEffect(() => {
     const response = async () => {
-
-      if(type === 'price'){
+      if (type === "price") {
         const data = await sortByPrice(true);
-        setData(data)
-      }
-      else{
+        setData(data);
+      } else {
         const data = await sortByQuantity(true);
-        setData(data)
+        setData(data);
       }
+    };
+    response();
+  }, []);
 
-    }
-    response()
-  }, [])
-
-
-  
+  //Sleleccionamos unicamente los 6 primeros productos de la lista
   const chartData = data.slice(0, 6);
-  
+
+  //Configuracion del grafico (tooltip y labels)
   const chartConfig = {
     count: {
-      label: type === 'price' ? 'Price' : 'Quantity',
+      label: type === "price" ? "Price" : "Quantity",
       color: "hsl(var(--chart-1))",
     },
     label: {
-      color: 'white'
-    }
-  } satisfies ChartConfig
+      color: "white",
+    },
+  } satisfies ChartConfig;
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>
-          {type === 'price' ? 'Products with higher price in stock' : 'Products with more items in stock'} 
+          {type === "price"
+            ? "Products with higher price in stock"
+            : "Products with more items in stock"}
         </CardTitle>
       </CardHeader>
       <CardContent>
-      <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig}>
           <BarChart
             accessibilityLayer
             data={chartData}
@@ -87,13 +96,17 @@ export function BarComponent({type}: BarComponentProps) {
               tickFormatter={(value) => value.slice(0, 3)}
               hide
             />
-            <XAxis dataKey={type === 'price' ? 'price' : 'quantity'} type="number" hide />
+            <XAxis
+              dataKey={type === "price" ? "price" : "quantity"}
+              type="number"
+              hide
+            />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
             <Bar
-              dataKey={type === 'price' ? 'price' : 'quantity'}
+              dataKey={type === "price" ? "price" : "quantity"}
               layout="vertical"
               fill="var(--color-count)"
               radius={4}
@@ -106,7 +119,7 @@ export function BarComponent({type}: BarComponentProps) {
                 fontSize={12}
               />
               <LabelList
-                dataKey={type === 'price' ? 'price' : 'quantity'}
+                dataKey={type === "price" ? "price" : "quantity"}
                 position="right"
                 offset={8}
                 className="fill-foreground"
@@ -115,7 +128,6 @@ export function BarComponent({type}: BarComponentProps) {
             </Bar>
           </BarChart>
         </ChartContainer>
-      
       </CardContent>
       {/* <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
@@ -126,5 +138,5 @@ export function BarComponent({type}: BarComponentProps) {
         </div>
       </CardFooter> */}
     </Card>
-  )
+  );
 }

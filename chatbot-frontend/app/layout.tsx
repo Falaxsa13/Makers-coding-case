@@ -31,25 +31,17 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
         <WebSocketProvider>
-        <Navbar />
-         <div className="flex h-screen ">
-         
-          
-      {/* Sidebar for large screens */}
-      {/* <div className="hidden md:flex md:w-72 shadow-md">
+          <Navbar />
+          <div className="flex h-screen ">
+            {/* Sidebar for large screens */}
+            {/* <div className="hidden md:flex md:w-72 shadow-md">
         <Sidebar />
       </div> */}
-      
-      
-      
-      {/* Main content */}
-      <div className="flex-1 p-4">
-      
-        {children}
-      </div>
-    </div>
-    </WebSocketProvider>
 
+            {/* Main content */}
+            <div className="flex-1 p-4">{children}</div>
+          </div>
+        </WebSocketProvider>
       </body>
     </html>
   );
