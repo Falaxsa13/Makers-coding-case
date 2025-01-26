@@ -5,8 +5,8 @@ from typing import List
 from dotenv import load_dotenv
 import os
 from openai import OpenAI
-from utils.inventory import load_inventory, filter_by_category, find_item_by_name
-
+import json
+from utils.inventory import getProducts, createNewOrder, reply
 
 # Load environment variables
 load_dotenv()
@@ -50,59 +50,151 @@ def read_root():
 # Include API routes
 app.include_router(inventory.router, prefix="/api/inventory", tags=["Inventory"])
 
-from utils.inventory import load_inventory, filter_by_category, find_item_by_name
+# --------------------
+# Define the OpenAI Functions (Schema + Description)
+# --------------------
+openai_functions = [
+    {
+        "name": "getProducts",
+        "description": "Get details about products from inventory, including stock and price.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "A query term. E.g., 'laptop' or 'dell'"
+                }
+            },
+            "required": ["query"]
+        },
+    },
+    {
+        "name": "reply",
+        "description": "Respond to the user's query with a final message.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "description": "The response message to send to the user."
+                }
+            },
+            "required": ["message"]
+        }
+    },
+    {
+        "name": "createNewOrder",
+        "description": "Create a new order for a customer by deducting inventory.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "customerId": {
+                    "type": "integer",
+                    "description": "The customer's ID"
+                },
+                "productId": {
+                    "type": "integer",
+                    "description": "The Product ID value of the product"
+                },
+                "quantity": {
+                    "type": "integer",
+                    "description": "How many units the customer wants"
+                },
+                "unitPrice": {
+                    "type": "number",
+                    "description": "Price per single unit"
+                }
+            },
+            "required": ["customerId", "productId", "quantity", "unitPrice"]
+        }
+    }
+]
 
+
+
+# --------------------
+# WebSocket Endpoint
+# --------------------
 @app.websocket("/ws/chat")
 async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
-    try:
-        context = [{"role": "system", "content": "You are a helpful assistant who manages an inventory system."}]
-        inventory = load_inventory()
 
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are a helpful e-commerce assistant. "
+                "You have access to a few specialized functions: getProducts, createNewOrder, and reply. "
+                "Use them appropriately to help the user. "
+                "Always check stock before confirming an order."
+            )
+        }
+    ]
+
+    try:
         while True:
             user_message = await websocket.receive_text()
-            print(f"User: {user_message}")
+            print(f"[User] {user_message}")
 
-            # Add the user message to the context
-            context.append({"role": "user", "content": user_message})
+            # Add user message
+            messages.append({"role": "user", "content": user_message})
 
-            # Check for inventory-related queries
-            if "laptops" in user_message.lower():
-                laptops = filter_by_category("laptop", inventory)
-                if laptops:
-                    laptop_names = ", ".join([laptop["name"] for laptop in laptops])
-                    ai_message = f"We currently have the following laptops in stock: {laptop_names}."
-                else:
-                    ai_message = "Sorry, we currently have no laptops in stock."
-                context.append({"role": "assistant", "content": ai_message})
-                await manager.broadcast(f"AI: {ai_message}")
-            elif "HP" in user_message or "Dell" in user_message:  # Specific brand query
-                item = find_item_by_name(user_message, inventory)
-                if item:
-                    if item["quantity"] > 0:
-                        ai_message = f"We have {item['quantity']} units of {item['name']} in stock."
-                    else:
-                        ai_message = f"Sorry, {item['name']} is currently out of stock."
-                else:
-                    ai_message = "I couldn't find that item in our inventory."
-                context.append({"role": "assistant", "content": ai_message})
-                await manager.broadcast(f"AI: {ai_message}")
-            else:
-                # Let OpenAI handle reasoning for complex queries
+            # Call OpenAI with function definitions
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",  # or gpt-3.5-turbo-16k-0613, etc.
+                messages=messages,
+                functions=openai_functions,
+                function_call="auto"  # Let the AI choose to call a function
+            )
+
+            
+            msg_content = response.choices[0].message
+
+            function_call = getattr(msg_content, "function_call", None)
+            if function_call:
+                # The AI wants to call a function
+                function_name = msg_content.function_call.name
+                arguments = msg_content.function_call.arguments
+
                 try:
-                    response = client.chat.completions.create(
-                        model="gpt-3.5-turbo",
-                        messages=context,
-                        temperature=0.7,
-                        max_tokens=150
-                    )
-                    ai_message = response.choices[0].message.content
-                    context.append({"role": "assistant", "content": ai_message})
-                    await manager.broadcast(f"AI: {ai_message}")
-                except Exception as e:
-                    error_message = f"Error generating response: {str(e)}"
-                    print(error_message)
-                    await websocket.send_text("AI: Sorry, there was an error generating a response.")
+                    parsed_args = json.loads(arguments)
+                except json.JSONDecodeError:
+                    parsed_args = {}
+
+                # Run the corresponding Python function
+                function_response = None
+                if function_name == "getProducts":
+                    function_response = getProducts(**parsed_args)
+                elif function_name == "createNewOrder":
+                    function_response = createNewOrder(**parsed_args)
+                elif function_name == "reply":
+                    function_response = reply(**parsed_args)
+                else:
+                    function_response = "Function not recognized."
+
+                # Now we give the function result back to the model as an assistant message with role=function
+                messages.append({
+                    "role": "function",
+                    "name": function_name,
+                    "content": function_response
+                })
+
+                # We call the model again to get the final user-facing text
+                second_response = client.chat.completions.create(
+                    model="gpt-3.5-turbo",
+                    messages=messages
+                )
+                final_content = second_response.choices[0].message.content
+
+                messages.append({"role": "assistant", "content": final_content})
+                await manager.broadcast(f"AI: {final_content}")
+
+            else:
+                # The AI did not call any function; it just responded with text
+                final_content = msg_content.content
+                messages.append({"role": "assistant", "content": final_content})
+                await manager.broadcast(f"AI: {final_content}")
+
     except WebSocketDisconnect:
         manager.disconnect(websocket)
         print("Client disconnected")

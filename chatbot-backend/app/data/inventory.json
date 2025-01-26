@@ -1,152 +1,502 @@
 [
-  { "id": 1, "name": "Dell Laptop", "quantity": 5, "category": "Laptop" },
-  { "id": 2, "name": "HP Laptop", "quantity": 2, "category": "Laptop" },
-  { "id": 3, "name": "Apple MacBook", "quantity": 0, "category": "Laptop" },
-  { "id": 4, "name": "Samsung Monitor", "quantity": 3, "category": "Monitor" },
+  {
+    "id": 1,
+    "name": "Dell Laptop",
+    "quantity": 5,
+    "category": "Laptop",
+    "price": 800,
+    "price_category": "High",
+    "brand": "Dell",
+    "description": "Laptop Dell de alto rendimiento, equipada con un procesador Intel Core i5, 8 GB de RAM y un SSD de 256 GB. Ideal para profesionales que buscan un dispositivo confiable para trabajar en tareas de oficina y multitarea diaria."
+  },
+  {
+    "id": 2,
+    "name": "HP Laptop",
+    "quantity": 2,
+    "category": "Laptop",
+    "price": 600,
+    "price_category": "High",
+    "brand": "HP",
+    "description": "Laptop HP económica, con pantalla Full HD de 15.6 pulgadas, procesador AMD Ryzen 5 y 8 GB de RAM. Perfecta para estudiantes y usuarios que necesitan una máquina versátil a un precio razonable."
+  },
+  {
+    "id": 3,
+    "name": "Apple MacBook",
+    "quantity": 0,
+    "category": "Laptop",
+    "price": 1200,
+    "price_category": "High",
+    "brand": "Apple",
+    "description": "MacBook de Apple con diseño elegante y ligero, cuenta con el potente chip M1, 256 GB de almacenamiento SSD y una pantalla Retina de 13 pulgadas. Ideal para creadores de contenido y usuarios que priorizan el rendimiento y la calidad de imagen."
+  },
+  {
+    "id": 4,
+    "name": "Samsung Monitor",
+    "quantity": 3,
+    "category": "Monitor",
+    "price": 300,
+    "price_category": "Medium",
+    "brand": "Samsung",
+    "description": "Monitor Samsung de 27 pulgadas con resolución Full HD, tecnología de pantalla curva y un tiempo de respuesta de 5 ms. Perfecto para disfrutar de una experiencia inmersiva en videojuegos o tareas de diseño gráfico."
+  },
   {
     "id": 5,
     "name": "Logitech Mouse",
     "quantity": 12,
-    "category": "Accessory"
+    "category": "Accessory",
+    "price": 25,
+    "price_category": "Low",
+    "brand": "Logitech",
+    "description": "Ratón Logitech ergonómico con tecnología inalámbrica y un diseño compacto. Su sensor óptico de alta precisión lo hace ideal para tareas básicas de oficina y navegación web."
   },
   {
     "id": 6,
     "name": "Corsair Keyboard",
     "quantity": 8,
-    "category": "Accessory"
+    "category": "Accessory",
+    "price": 70,
+    "price_category": "Medium",
+    "brand": "Corsair",
+    "description": "Teclado mecánico Corsair con retroiluminación RGB personalizable, interruptores mecánicos Cherry MX y un diseño resistente. Diseñado para gamers que buscan una experiencia de escritura precisa y rápida."
   },
-  { "id": 7, "name": "Sony Headphones", "quantity": 6, "category": "Audio" },
-  { "id": 8, "name": "Google Pixel Phone", "quantity": 1, "category": "Phone" },
-  { "id": 9, "name": "Apple iPhone", "quantity": 0, "category": "Phone" },
-  { "id": 10, "name": "Canon Printer", "quantity": 7, "category": "Printer" },
-  { "id": 11, "name": "Epson Printer", "quantity": 3, "category": "Printer" },
-  { "id": 12, "name": "Asus Laptop", "quantity": 4, "category": "Laptop" },
-  { "id": 13, "name": "Acer Monitor", "quantity": 2, "category": "Monitor" },
-  { "id": 14, "name": "HP Desktop", "quantity": 10, "category": "Desktop" },
-  { "id": 15, "name": "Apple Watch", "quantity": 0, "category": "Wearable" },
+  {
+    "id": 7,
+    "name": "Sony Headphones",
+    "quantity": 6,
+    "category": "Audio",
+    "price": 150,
+    "price_category": "Medium",
+    "brand": "Sony",
+    "description": "Auriculares Sony con cancelación activa de ruido, conectividad Bluetooth y una duración de batería de hasta 30 horas. Perfectos para disfrutar de música de alta calidad sin distracciones externas."
+  },
+  {
+    "id": 8,
+    "name": "Google Pixel Phone",
+    "quantity": 5,
+    "category": "Phone",
+    "price": 700,
+    "price_category": "High",
+    "brand": "Google",
+    "description": "Teléfono Google Pixel con cámara de calidad profesional, pantalla OLED de 6 pulgadas y un procesador Snapdragon 765G. Diseñado para los entusiastas de la fotografía móvil y el uso fluido de aplicaciones."
+  },
+  {
+    "id": 9,
+    "name": "Apple iPhone",
+    "quantity": 0,
+    "category": "Phone",
+    "price": 1000,
+    "price_category": "High",
+    "brand": "Apple",
+    "description": "iPhone de última generación con tecnología 5G, chip A14 Bionic y un sistema de cámaras duales de alta resolución. Ideal para quienes buscan un teléfono premium con rendimiento excepcional."
+  },
+  {
+    "id": 10,
+    "name": "Canon Printer",
+    "quantity": 7,
+    "category": "Printer",
+    "price": 200,
+    "price_category": "Medium",
+    "brand": "Canon",
+    "description": "Impresora Canon multifuncional que permite impresión, escaneo y copiado. Ofrece conectividad WiFi y compatibilidad con impresión móvil, ideal para oficinas en casa."
+  },
+  {
+    "id": 11,
+    "name": "Epson Printer",
+    "quantity": 3,
+    "category": "Printer",
+    "price": 180,
+    "price_category": "Medium",
+    "brand": "Epson",
+    "description": "Impresora Epson económica con sistema de tanque de tinta que reduce los costos de impresión. Excelente para estudiantes o pequeñas oficinas que imprimen con frecuencia."
+  },
+  {
+    "id": 12,
+    "name": "Asus Laptop",
+    "quantity": 5,
+    "category": "Laptop",
+    "price": 750,
+    "price_category": "High",
+    "brand": "Asus",
+    "description": "Laptop Asus con procesador Intel Core i7, gráficos dedicados y pantalla NanoEdge Full HD. Ideal para profesionales y estudiantes que necesitan potencia y rendimiento."
+  },
+  {
+    "id": 13,
+    "name": "Acer Monitor",
+    "quantity": 2,
+    "category": "Monitor",
+    "price": 250,
+    "price_category": "Medium",
+    "brand": "Acer",
+    "description": "Monitor Acer de 24 pulgadas con tecnología IPS y resolución Full HD. Perfecto para edición de video, diseño gráfico y entretenimiento."
+  },
+  {
+    "id": 14,
+    "name": "HP Desktop",
+    "quantity": 10,
+    "category": "Desktop",
+    "price": 900,
+    "price_category": "High",
+    "brand": "HP",
+    "description": "PC de escritorio HP con procesador Intel Core i5 de décima generación, 16 GB de RAM y 1 TB de almacenamiento HDD. Perfecta para tareas exigentes y trabajos de oficina."
+  },
+  {
+    "id": 15,
+    "name": "Apple Watch",
+    "quantity": 0,
+    "category": "Wearable",
+    "price": 400,
+    "price_category": "Medium",
+    "brand": "Apple",
+    "description": "Apple Watch con pantalla Retina siempre activa, monitor de oxígeno en sangre y funciones avanzadas de seguimiento deportivo. Ideal para usuarios activos."
+  },
   {
     "id": 16,
     "name": "Samsung Galaxy Watch",
     "quantity": 5,
-    "category": "Wearable"
+    "category": "Wearable",
+    "price": 350,
+    "price_category": "Medium",
+    "brand": "Samsung",
+    "description": "Samsung Galaxy Watch con diseño elegante, resistencia al agua y compatibilidad con Android e iOS. Incluye GPS integrado y seguimiento de salud detallado."
   },
-  { "id": 17, "name": "Bose Speaker", "quantity": 8, "category": "Audio" },
-  { "id": 18, "name": "JBL Earphones", "quantity": 2, "category": "Audio" },
+  {
+    "id": 17,
+    "name": "Bose Speaker",
+    "quantity": 8,
+    "category": "Audio",
+    "price": 200,
+    "price_category": "Medium",
+    "brand": "Bose",
+    "description": "Altavoz Bose compacto con tecnología de sonido envolvente y conectividad Bluetooth. Ideal para fiestas o escuchar música en casa."
+  },
+  {
+    "id": 18,
+    "name": "JBL Earphones",
+    "quantity": 2,
+    "category": "Audio",
+    "price": 40,
+    "price_category": "Low",
+    "brand": "JBL",
+    "description": "Auriculares JBL con sonido claro y bajos potentes, diseño ergonómico y cable resistente. Perfectos para uso diario y actividades físicas."
+  },
   {
     "id": 19,
     "name": "Microsoft Surface",
     "quantity": 6,
-    "category": "Laptop"
+    "category": "Laptop",
+    "price": 850,
+    "price_category": "High",
+    "brand": "Microsoft",
+    "description": "Microsoft Surface portátil con pantalla táctil PixelSense y lápiz compatible para productividad creativa. Ideal para estudiantes y profesionales del diseño."
   },
   {
     "id": 20,
     "name": "Alienware Gaming PC",
     "quantity": 1,
-    "category": "Desktop"
+    "category": "Desktop",
+    "price": 1500,
+    "price_category": "High",
+    "brand": "Alienware",
+    "description": "PC para juegos Alienware de alto rendimiento, con procesador Intel Core i7 y tarjeta gráfica NVIDIA RTX 3080. Diseñado para gamers exigentes."
   },
   {
     "id": 21,
     "name": "Razer Gaming Mouse",
     "quantity": 3,
-    "category": "Accessory"
+    "category": "Accessory",
+    "price": 60,
+    "price_category": "Medium",
+    "brand": "Razer",
+    "description": "Ratón Razer diseñado para gaming competitivo, con botones personalizables y sensor de alta precisión. Ideal para juegos de disparos y estrategia."
   },
   {
     "id": 22,
     "name": "HyperX Gaming Headset",
     "quantity": 4,
-    "category": "Audio"
+    "category": "Audio",
+    "price": 90,
+    "price_category": "Medium",
+    "brand": "HyperX",
+    "description": "Auriculares HyperX con sonido envolvente 7.1, micrófono desmontable y almohadillas cómodas. Perfectos para largas sesiones de juego."
   },
-  { "id": 23, "name": "Amazon Kindle", "quantity": 7, "category": "E-Reader" },
-  { "id": 24, "name": "Lenovo ThinkPad", "quantity": 0, "category": "Laptop" },
-  { "id": 25, "name": "Huawei MateBook", "quantity": 9, "category": "Laptop" },
+  {
+    "id": 23,
+    "name": "Amazon Kindle",
+    "quantity": 7,
+    "category": "E-Reader",
+    "price": 120,
+    "price_category": "Medium",
+    "brand": "Amazon",
+    "description": "Amazon Kindle con pantalla antirreflejo de 6 pulgadas y batería de larga duración. Ideal para leer libros electrónicos en cualquier lugar."
+  },
+  {
+    "id": 24,
+    "name": "Lenovo ThinkPad",
+    "quantity": 0,
+    "category": "Laptop",
+    "price": 650,
+    "price_category": "High",
+    "brand": "Lenovo",
+    "description": "Lenovo ThinkPad diseñado para negocios, con teclado resistente, procesador Intel Core i5 y almacenamiento SSD. Una opción confiable para profesionales."
+  },
+  {
+    "id": 25,
+    "name": "Huawei MateBook",
+    "quantity": 9,
+    "category": "Laptop",
+    "price": 700,
+    "price_category": "High",
+    "brand": "Huawei",
+    "description": "Laptop Huawei MateBook con diseño ultradelgado, procesador Intel Core i5 y pantalla FullView. Excelente para trabajo y entretenimiento."
+  },
   {
     "id": 26,
     "name": "Logitech Webcam",
     "quantity": 2,
-    "category": "Accessory"
+    "category": "Accessory",
+    "price": 50,
+    "price_category": "Low",
+    "brand": "Logitech",
+    "description": "Cámara web Logitech con resolución HD 720p y micrófono incorporado. Ideal para videollamadas y conferencias en línea."
   },
-  { "id": 27, "name": "Dell Monitor", "quantity": 5, "category": "Monitor" },
-  { "id": 28, "name": "Samsung SSD", "quantity": 6, "category": "Storage" },
+  {
+    "id": 27,
+    "name": "Dell Monitor",
+    "quantity": 5,
+    "category": "Monitor",
+    "price": 220,
+    "price_category": "Medium",
+    "brand": "Dell",
+    "description": "Monitor Dell de 24 pulgadas con tecnología LED, bordes delgados y ángulos de visión amplios. Perfecto para configuraciones de oficina."
+  },
+  {
+    "id": 28,
+    "name": "Samsung SSD",
+    "quantity": 6,
+    "category": "Storage",
+    "price": 150,
+    "price_category": "Medium",
+    "brand": "Samsung",
+    "description": "Unidad SSD Samsung de 500 GB con tecnología V-NAND, ideal para acelerar el rendimiento de computadoras y laptops."
+  },
   {
     "id": 29,
     "name": "Seagate Hard Drive",
     "quantity": 11,
-    "category": "Storage"
+    "category": "Storage",
+    "price": 100,
+    "price_category": "Medium",
+    "brand": "Seagate",
+    "description": "Disco duro externo Seagate con 1 TB de capacidad, diseño compacto y compatibilidad USB 3.0 para transferencias rápidas."
   },
   {
     "id": 30,
     "name": "WD External Hard Drive",
     "quantity": 3,
-    "category": "Storage"
+    "category": "Storage",
+    "price": 120,
+    "price_category": "Medium",
+    "brand": "Western Digital",
+    "description": "Disco duro externo WD de 1 TB, resistente y confiable, ideal para realizar copias de seguridad y almacenar grandes cantidades de datos."
   },
-  { "id": 31, "name": "ADATA RAM", "quantity": 7, "category": "Memory" },
+  {
+    "id": 31,
+    "name": "ADATA RAM",
+    "quantity": 7,
+    "category": "Memory",
+    "price": 80,
+    "price_category": "Medium",
+    "brand": "ADATA",
+    "description": "Módulo de memoria RAM ADATA de 16 GB DDR4 con alto rendimiento y compatibilidad para sistemas de escritorio y laptops."
+  },
   {
     "id": 32,
     "name": "Kingston Flash Drive",
     "quantity": 15,
-    "category": "Storage"
+    "category": "Storage",
+    "price": 20,
+    "price_category": "Low",
+    "brand": "Kingston",
+    "description": "Memoria USB Kingston de 32 GB con diseño portátil y resistente, ideal para transportar archivos de manera rápida y segura."
   },
-  { "id": 33, "name": "Sandisk MicroSD", "quantity": 4, "category": "Storage" },
-  { "id": 34, "name": "Apple iPad", "quantity": 0, "category": "Tablet" },
-  { "id": 35, "name": "Sony Camera", "quantity": 2, "category": "Camera" },
-  { "id": 36, "name": "Nikon DSLR", "quantity": 1, "category": "Camera" },
-  { "id": 37, "name": "DJI Drone", "quantity": 3, "category": "Drone" },
-  { "id": 38, "name": "Oculus VR Headset", "quantity": 5, "category": "VR" },
-  { "id": 39, "name": "Logitech Speakers", "quantity": 6, "category": "Audio" },
-  { "id": 40, "name": "Samsung TV", "quantity": 4, "category": "Television" },
+  {
+    "id": 33,
+    "name": "Sandisk MicroSD",
+    "quantity": 4,
+    "category": "Storage",
+    "price": 15,
+    "price_category": "Low",
+    "brand": "SanDisk",
+    "description": "Tarjeta MicroSD SanDisk de 32 GB con velocidad de transferencia de hasta 100 MB/s, perfecta para smartphones y cámaras."
+  },
+  {
+    "id": 34,
+    "name": "Apple iPad",
+    "quantity": 0,
+    "category": "Tablet",
+    "price": 600,
+    "price_category": "High",
+    "brand": "Apple",
+    "description": "Apple iPad con pantalla Retina de 10.2 pulgadas, chip A12 Bionic y soporte para Apple Pencil. Ideal para productividad y entretenimiento."
+  },
+  {
+    "id": 35,
+    "name": "Sony Camera",
+    "quantity": 2,
+    "category": "Camera",
+    "price": 700,
+    "price_category": "High",
+    "brand": "Sony",
+    "description": "Cámara Sony compacta con sensor APS-C de 24 MP y lente intercambiable, perfecta para fotografía profesional."
+  },
+  {
+    "id": 36,
+    "name": "Nikon DSLR",
+    "quantity": 1,
+    "category": "Camera",
+    "price": 800,
+    "price_category": "High",
+    "brand": "Nikon",
+    "description": "Cámara DSLR Nikon con sensor de 24 MP, lente zoom y tecnología SnapBridge para transferencia rápida de imágenes."
+  },
+  {
+    "id": 37,
+    "name": "DJI Drone",
+    "quantity": 3,
+    "category": "Drone",
+    "price": 1000,
+    "price_category": "High",
+    "brand": "DJI",
+    "description": "Drone DJI con cámara 4K, estabilización de 3 ejes y autonomía de vuelo de hasta 30 minutos. Perfecto para fotografía aérea."
+  },
+  {
+    "id": 38,
+    "name": "Oculus VR Headset",
+    "quantity": 5,
+    "category": "VR",
+    "price": 450,
+    "price_category": "Medium",
+    "brand": "Oculus",
+    "description": "Auriculares VR Oculus con controladores táctiles y tecnología de rastreo precisa para una experiencia inmersiva en realidad virtual."
+  },
+  {
+    "id": 39,
+    "name": "Logitech Speakers",
+    "quantity": 6,
+    "category": "Audio",
+    "price": 120,
+    "price_category": "Medium",
+    "brand": "Logitech",
+    "description": "Altavoces Logitech con sonido estéreo de alta calidad y diseño compacto, ideales para computadoras y televisores."
+  },
+  {
+    "id": 40,
+    "name": "Samsung TV",
+    "quantity": 4,
+    "category": "Television",
+    "price": 1000,
+    "price_category": "High",
+    "brand": "Samsung",
+    "description": "Televisor Samsung 4K UHD de 55 pulgadas con tecnología QLED y compatibilidad con asistentes de voz."
+  },
   {
     "id": 41,
     "name": "LG Refrigerator",
     "quantity": 0,
-    "category": "Appliance"
+    "category": "Appliance",
+    "price": 1200,
+    "price_category": "High",
+    "brand": "LG",
+    "description": "Refrigerador LG con tecnología de enfriamiento inteligente, diseño espacioso y eficiencia energética."
   },
   {
     "id": 42,
     "name": "Philips Hue Light",
     "quantity": 9,
-    "category": "Smart Home"
+    "category": "Smart Home",
+    "price": 30,
+    "price_category": "Low",
+    "brand": "Philips",
+    "description": "Bombilla inteligente Philips Hue con control de colores a través de app, compatible con Alexa y Google Home."
   },
   {
     "id": 43,
     "name": "Ring Doorbell",
     "quantity": 2,
-    "category": "Smart Home"
+    "category": "Smart Home",
+    "price": 180,
+    "price_category": "Medium",
+    "brand": "Ring",
+    "description": "Timbre inteligente Ring con cámara HD, detección de movimiento y compatibilidad con WiFi."
   },
   {
     "id": 44,
     "name": "Nest Thermostat",
     "quantity": 3,
-    "category": "Smart Home"
+    "category": "Smart Home",
+    "price": 250,
+    "price_category": "Medium",
+    "brand": "Nest",
+    "description": "Termostato inteligente Nest con programación automática y control remoto a través de app. Compatible con sistemas HVAC."
   },
   {
     "id": 45,
     "name": "Xiaomi Smartwatch",
     "quantity": 7,
-    "category": "Wearable"
+    "category": "Wearable",
+    "price": 100,
+    "price_category": "Medium",
+    "brand": "Xiaomi",
+    "description": "Reloj inteligente Xiaomi con monitor de frecuencia cardíaca, resistencia al agua y duración de batería de hasta 10 días."
   },
-  { "id": 46, "name": "OnePlus Phone", "quantity": 1, "category": "Phone" },
+  {
+    "id": 46,
+    "name": "OnePlus Phone",
+    "quantity": 1,
+    "category": "Phone",
+    "price": 600,
+    "price_category": "High",
+    "brand": "OnePlus",
+    "description": "Teléfono OnePlus con pantalla AMOLED de 6.7 pulgadas, cámara cuádruple de alta resolución y tecnología de carga rápida."
+  },
   {
     "id": 47,
     "name": "ASRock Motherboard",
     "quantity": 3,
-    "category": "Component"
+    "category": "Component",
+    "price": 150,
+    "price_category": "Medium",
+    "brand": "ASRock",
+    "description": "Placa base ASRock con soporte para procesadores AMD Ryzen, tecnología PCIe 4.0 y diseño resistente."
   },
   {
     "id": 48,
     "name": "Cooler Master PSU",
     "quantity": 6,
-    "category": "Component"
+    "category": "Component",
+    "price": 130,
+    "price_category": "Medium",
+    "brand": "Cooler Master",
+    "description": "Fuente de poder Cooler Master de 650W con certificación 80 Plus Bronze y diseño modular para una fácil instalación."
   },
   {
     "id": 49,
     "name": "Fractal Design Case",
     "quantity": 8,
-    "category": "Component"
+    "category": "Component",
+    "price": 110,
+    "price_category": "Medium",
+    "brand": "Fractal Design",
+    "description": "Gabinete Fractal Design con diseño minimalista, paneles laterales de vidrio templado y excelente gestión de cables."
   },
   {
     "id": 50,
     "name": "Thermaltake Fans",
     "quantity": 12,
-    "category": "Component"
+    "category": "Component",
+    "price": 40,
+    "price_category": "Low",
+    "brand": "Thermaltake",
+    "description": "Ventiladores Thermaltake de 120 mm con iluminación RGB y alto flujo de aire, diseñados para sistemas de PC gaming."
   }
 ]
